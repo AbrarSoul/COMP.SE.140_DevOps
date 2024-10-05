@@ -59,7 +59,11 @@ These files are returned with some git service. Courses-gitlab repositories can 
 You should prepare your system in a way that the course staff can test the system with th following procedure (on Linux):
 
 $ git clone -b exercise1 <the git url you gave>
+
 $ docker-compose up –-build
+
 … wait for 10s
+
 $ curl localhost:8199
+
 $ docker-compose down
