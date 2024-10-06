@@ -56,7 +56,7 @@ Please do not include extra files in the repository.
 
 These files are returned with some git service. Courses-gitlab repositories can created to coursegitlab if you request one. Any git-repo that the staff can access without extra effort is ok.
 
-You should prepare your system in a way that the course staff can test the system with th following procedure (on Linux):
+You should prepare your system in a way that the course staff can test the system with the following procedure (on Linux):
 
 $ git clone -b exercise1 <the git url you gave>
 
