@@ -1,0 +1,13 @@
+docker network ls
+NETWORK ID     NAME                               DRIVER    SCOPE
+66352c84e5e8   bridge                             bridge    local
+f4067e9a33db   dockercomposeexercise_default      bridge    local
+203719ce8721   dockercomposeexercise_my-network   bridge    local
+6bf1b4e008fa   host                               host      local
+fb718f4e186f   none                               null      local
+19d8df53f6d6   week7_default                      bridge    local
+
+docker container ls
+CONTAINER ID   IMAGE                            COMMAND                  CREATED          STATUS          PORTS                                       NAMES
+214fc501f598   dockercomposeexercise_service1   "python service1.py"     17 seconds ago   Up 17 seconds   0.0.0.0:8199->8199/tcp, :::8199->8199/tcp   dockercomposeexercise_service1_1
+81996ffc1a1c   dockercomposeexercise_service2   "docker-entrypoint.s…"   18 seconds ago   Up 17 seconds   0.0.0.0:8200->8200/tcp, :::8200->8200/tcp   dockercomposeexercise_service2_1

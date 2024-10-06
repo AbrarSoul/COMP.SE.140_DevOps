@@ -1,0 +1,21 @@
+(1) Container Networking:
+Internal IP Addresses: Each container has its own internal IP address. For instance, Service1 is available on both 127.0.0.1:8199 (localhost) and 192.168.16.3:8199 (internal Docker network). The containers can communicate with each other using these internal addresses.
+Containers and the host share the network interface in a way that allows external services to communicate via the exposed ports. In this case, port 8199 for Service1 and 8200 for Service2 are mapped to the host machine, allowing access from outside the container.
+Service-to-Service Communication: Service1 successfully communicated with Service2 over Docker's internal network. The request from Service1 to Service2 used the internal service name (service2:8200) to retrieve system data.
+
+(2) Containers and the Host:
+Isolated Environment: Both services are isolated in their respective containers with separate process trees, network interfaces, and disk spaces. This isolation ensures that the services don’t interfere with each other or with processes running on the host.
+Shared Resources: Despite isolation, containers share certain host resources like CPU, memory, and disk. The IP addresses share the network interface from the host to communicate externally.
+Process Information: Each container can list processes (ps -ax) that are running inside the container but cannot see processes outside its container environment.
+However, the containers can access system commands like ps, df, and uptime to gather and report data about their environment, but only within the container’s context.
+
+(3) Port Binding:
+Service1: Bound to port 8199 on the host, accessible from the host machine using "curl localhost:8199".
+Service2: Bound internally on port 8200, accessible only from Service1 within the Docker network but not directly from the host machine (unless exposed).
+
+(4) Container Lifecycle:
+Both containers were started, built successfully, and ran their respective applications. The fact that curl commands to Service1 returned HTTP 200 responses indicates that Service1 fetched data successfully from Service2.
+
+(5) Resources:
+Containers share the host machine’s CPU and memory resources, but they operate in a restricted environment using Docker's virtualization. Each container runs its own processes, but those processes are limited to the resources allocated by the Docker daemon.
+For example, Service1 and Service2 run their respective processes (python and node) independently, but they still consume CPU cycles and memory from the host.
