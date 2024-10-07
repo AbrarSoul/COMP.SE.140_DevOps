@@ -1,4 +1,4 @@
-# COMP.SE.140 – Docker-compose hands on
+# Docker Compose exercise
 
 # Version history
 V1.0 25.09.2024 First version
