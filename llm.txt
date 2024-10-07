@@ -1,0 +1,15 @@
+o The used LLM tool
+- ChatGPT
+
+o Motivation/reason to use LLM
+- I found lots of error in the javascript file. After trying to find the solution from stack overflow and other sites, finally I used ChatGPT to understand about the problem.
+
+o How and why LLM helped
+- LLM saves time and and it assisted me with exploring the errors. However, I didn't find the solution in the first prompt. After giving several prompts, finally I got the solution.
+
+o What kind of mistakes LLM did
+- Firstly, ChatGPT suggested me to import 'express' library which was actually not correct. After that it suggested me to change python version which was also not the correct solution. Finally, it suggested me to create package.json which actually works for me.
+
+o What were things that LLM was not able to provide
+- LLM was not able to provide the exact solution at the first time. After explaining the error several times, it provided the right solution.
+ 
