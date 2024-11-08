@@ -1,69 +1,61 @@
-# COMP.SE.140 – Docker-compose hands on
+# COMP.SE.140 - NGINX Hands-On
 
-# Version history
-V1.0 25.09.2024 First version
+## Version History
+- **V1.0 (23.10.2024)**: First internal version for course staff
+- **V1.1 (24.10.2024)**: Staff feedback
+- **V1.2 (28.10.2024)**: Corrected fixes pointed out by students
+- **V1.3 (30.10.2024)**: Additional correction
 
-V1.1 29.09.2024 First corrections
+## Synopsis
+The task is to add an NGINX gateway and Web interface in front of the previous exercise (Docker Compose hands-on). The gateway will implement basic authentication and load balancing.
 
-# Synopsis
-The purpose of this exercise is to learn (or recap) how to create a system of two interworking services that are started up and stopped together. This requires creation of your own Dockerfiles and docker-compose.yaml, and also creation the simple applications. The applications can be
-implemented in any programming language (shell script and HTML not allowed), but different programming language must be used for the two applications. You also need to play with some operating system concepts.
+## Learning Goals
+This exercise aims to teach students:
+- Load-balancing, access control, and other gateway functionalities.
+- Hands-on experience with NGINX and its integration into applications.
 
-# Learning goals
+## Task Definition
+1. **Service Requirements**:
+   - Services 1 and 2 run similarly to the previous exercise, with some modifications:
+     - Service 1 has a 2-second delay after responding to a request and cannot respond to another request during this time.
+     - Three instances of Service 1 are created.
+   
+2. **NGINX Setup**:
+   - NGINX is added as a service in `docker-compose`, listening on port **8198** (the only exposed port).
+   - NGINX acts as a web server; testing is done via a browser.
 
- - Recap your hands on with Docker and Docker Compose. This is assumed to be known from earlier courses and will be needed in the next steps of the course.
- - Understand the relation of containers to the operating system and networking.
- - Ensure hands on with Linux.
- - See the value of virtualization for application development.
+3. **Load Balancing**:
+   - NGINX is configured to distribute requests across the three instances of Service 1, using the default round-robin algorithm.
 
-# Task definition
-In this exercise we will build a simple system composed of two small services (Service1 and Service2) implemented in different programming languages. The services are small programs running in separate containers. Both of these applications collect information from the container:
-- IP address of the container
-- Running processes (e.g. output of “ps -ax” on Ubuntu)
-- Available disk-space in the root file systems of the container (e.g. command “df”)
-- Time since last boot
-The composition of two containers (services) works as a single service, so that one service works as an HTTP-server (waiting in port 8199) for external clients. Only one Service1 can be accessed from outside, so it needs to ask information from Service2 within the composition.
+4. **Basic Authentication**:
+   - Basic authentication is configured in NGINX, with a single user initialized.
 
-The response to the HTTP-request should be
-Service
-- IP address information
-- list of running processes
-- available disk space
-- time since last boot
-Service2
-- IP address information
-- list of running processes
-- available disk space
-- time since last boot
+5. **System Behavior**:
+   - Accessing `http://localhost:8198` prompts a login page.
+   - On successful login, a new page appears with **REQUEST** and **STOP** buttons, and a text area.
+     - Invalid credentials either prompt an error or re-request the login.
+   - **REQUEST** button sends a request to one of the Service 1 instances via the load balancer; the response appears in the text area.
+   - **STOP** button closes all containers, terminating the `docker compose` process.
 
-Use JSON formatting
+## Implementation Notes
+This task is challenging, and there is flexibility in the implementation approach. Failure to fully implement will result in minor point deductions.
 
-# Some notes
-The IP address may be IP4 or IP6 address – depending on the system. For example the “:ffff:”- prefix provided by some libraries can be included.
+## Deadlines
+Refer to the course Moodle for specific deadlines.
 
-Give the images unique names.
+## Submitting for Grading
+In the git repository under branch `exercise4`, submit:
+- All Dockerfiles and `docker-compose.yaml`
+- Source code for the applications
+- Output of `docker container ls` and `docker network ls` (while services are running) in `docker-status.txt`
+- `login.txt` containing the username and password
 
-# Submitting for grading
+Please avoid including extra files. Any git service accessible to course staff without extra effort is acceptable.
 
-After the system is ready the student should return (in the git repository – in branch “exercise1”).
- - Content of two Docker and docker-compose.yaml files
- - Source codes of the applications.
- - Output of “docker container ls” and “docker network ls” (executed when the services are up and running.) in a text file “docker-status.txt”
- - A short (max 300 words ) text file describing your findings on what containers share with the host. Put that to “findings.txt”
- - Optional “llm.txt” (see below)
-
-Please do not include extra files in the repository.
-
-These files are returned with some git service. Courses-gitlab repositories can created to coursegitlab if you request one. Any git-repo that the staff can access without extra effort is ok.
-
-You should prepare your system in a way that the course staff can test the system with the following procedure (on Linux):
-
-$ git clone -b exercise1 <the git url you gave>
-
-$ docker-compose up –-build
-
-… wait for 10s
-
-$ curl localhost:8199
-
-$ docker-compose down
+**Testing Instructions** (Linux):
+```bash
+$ git clone -b exercise4 <your_git_url>
+$ docker compose up --build
+# Wait for 10 seconds
+# Open a browser and navigate to http://localhost:8198
+$ docker compose down
